@@ -1,0 +1,21 @@
+# 这里配置你需要的API密钥，每行一个，格式为：密钥名=密钥值
+# 示例：
+# DEEPSEEK_API_KEY=sk-xxxxxx
+# OPENAI_API_KEY=sk-xxxxxx
+# QIANFAN_ACCESS_KEY=xxxxxx
+# QIANFAN_SECRET_KEY=xxxxxx
+
+# 下面是你当前的配置（可以直接修改）：
+SILICONFLOW_API_KEY=your-siliconflow-key
+ZHIPU_API_KEY=your-zhipu-key
+DASHSCOPE_API_KEY=your-dashscope-key
+ARK_API_KEY=your-ark-key
+GEMINI_API_KEY=your-gemini-key
+GROQ_API_KEY=your-groq-key
+CEREBRAS_API_KEY=your-cerebras-key
+OPENROUTER_API_KEY=your-openrouter-key
+MISTRAL_API_KEY=your-mistral-key
+GITHUB_MODELS_TOKEN=your-github-models-token
+OLLAMA_BASE_URL=http://127.0.0.1:11434/v1
+DEEPSEEK_API_KEY=your-deepseek-key
+AREFREE_API_KEY=your-arefree-key

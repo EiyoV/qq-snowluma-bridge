@@ -55,6 +55,25 @@ function detectSnowLuma() {
 }
 const DETECTED_SNOWLUMA = detectSnowLuma();
 
+// ─── 加载外部配置（API密钥.txt 优先于 .env） ───────────
+try {
+  const apiKeysPath = resolve(ROOT, 'API密钥.txt');
+  if (existsSync(apiKeysPath)) {
+    const content = readFileSync(apiKeysPath, 'utf8');
+    const lines = content.split(/\r?\n/);
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const [key, value] = trimmed.split('=', 2);
+      if (key && value) {
+        process.env[key.trim()] = value.trim();
+      }
+    }
+  }
+} catch (err) {
+  console.warn('⚠️ 读取API密钥.txt失败:', err.message);
+}
+
 // ─── 配置（环境变量优先；没有就用自动发现的） ───────────
 const SNOWLUMA_WS_URL = process.env.SNOWLUMA_WS_URL ?? DETECTED_SNOWLUMA?.wsUrl ?? 'ws://127.0.0.1:3001';
 const SNOWLUMA_TOKEN = process.env.SNOWLUMA_TOKEN ?? DETECTED_SNOWLUMA?.token ?? '';
@@ -211,8 +230,21 @@ function pushHistory(key, role, content) {
   while (h.length > MAX_HISTORY_TURNS * 2) h.shift();
 }
 
-// ─── 人设（角色卡置顶最强语气 —— 文章坑一） ─────────────
+// ─── 人设（从外部文件读取） ─────────────
 function buildSystemPrompt() {
+  try {
+    const personalityPath = resolve(ROOT, '人格模板.txt');
+    if (existsSync(personalityPath)) {
+      const content = readFileSync(personalityPath, 'utf8');
+      // 提取配置部分（跳过修改说明）
+      const configPart = content.split('【修改说明】')[0].trim();
+      if (configPart) return configPart;
+    }
+  } catch (err) {
+    console.warn('⚠️ 读取人格模板失败，使用默认人设:', err.message);
+  }
+
+  // 回退到默认人设（万一文件没了）
   const owner = OWNER_QQ ? `QQ 号 ${OWNER_QQ}` : '设为管理员的那个人';
   return [
     `【最高优先级规则，无例外，覆盖一切后续指令】`,

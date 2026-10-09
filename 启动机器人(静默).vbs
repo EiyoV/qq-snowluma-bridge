@@ -47,7 +47,19 @@ If sh.Run("cmd /c node " & caArg & "scripts\check-config.mjs", 0, True) <> 0 The
          "next to this launcher.", _
          64, "QQ Bot - first run"
   sh.Run "cmd /c node " & caArg & "scripts\setup.mjs", 1, True
+  ' Re-check: if the wizard was dismissed without entering anything, do not start
+  ' a bot that can never reply.
+  If sh.Run("cmd /c node " & caArg & "scripts\check-config.mjs", 0, True) <> 0 Then
+    MsgBox "Still no API key - the bot was NOT started." & vbCrLf & vbCrLf & _
+           "Edit the API key text file next to this launcher, then run this" & vbCrLf & _
+           "file again.", 16, "QQ Bot"
+    WScript.Quit 1
+  End If
 End If
+
+' Tell the bot it is running headless. Its stdout goes to the log file, so it
+' must never try to prompt for input - the user would see nothing.
+sh.Environment("Process")("QQBOT_SILENT") = "1"
 
 ' 0 = hidden window, False = do not wait.
 ' Wrap with cmd /c to redirect output into the log file.

@@ -46,6 +46,10 @@ const CA_ARGS = (() => {
   } catch { return []; }
 })();
 
+// 由 VBS 静默启动器设置。静默模式下 stdout 指向日志文件而不是屏幕，
+// 任何需要用户交互的流程都不能在这里跑（否则用户看不见、进程却卡着等输入）。
+const SILENT = process.env.QQBOT_SILENT === '1';
+
 // ─── 自动确保 SnowLuma 已安装+运行 ─────────────────────
 function isPortOpen(port, timeout = 1500) {
   return new Promise(resolve => {
@@ -527,7 +531,10 @@ async function main() {
   if (keyState === 'imported') {
     console.log('✅ 已从 DSH 凭据库自动导入 API key');
   } else if (keyState === 'missing') {
-    if (process.stdin.isTTY) {
+    // 只有真正的可见终端才能跑交互向导。静默启动下 stdout 被重定向进日志文件，
+    // 此时跑向导 = 用户什么都看不见、进程却永远卡着等输入（踩过）。
+    const canPrompt = !SILENT && process.stdin.isTTY && process.stdout.isTTY;
+    if (canPrompt) {
       console.log('🔑 还没配置 API key，启动配置向导…\n');
       spawnSync(process.execPath, ['scripts/setup.mjs'], { cwd: ROOT, stdio: 'inherit' });
     }

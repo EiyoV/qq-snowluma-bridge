@@ -24,13 +24,76 @@
  *   LLM_ROUTER_URL   默认 http://localhost:18787/v1/chat/completions
  */
 
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { resolve, dirname } from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
-import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, mkdirSync } from 'node:fs';
+import net from 'node:net';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)));
+const APP_DIR = resolve(ROOT, 'snowluma-pkg', 'app');
+
+// ─── 自动确保 SnowLuma 已安装+运行 ─────────────────────
+async function ensureSnowLuma() {
+  // 1. 检查 3001 端口是否已经在监听（SnowLuma 已经在跑了）
+  const portOpen = await new Promise(resolve => {
+    const sock = net.connect(3001, '127.0.0.1', () => { sock.end(); resolve(true); });
+    sock.on('error', () => resolve(false));
+    sock.setTimeout(2000, () => { sock.destroy(); resolve(false); });
+  });
+  if (portOpen) {
+    console.log('✅ SnowLuma 已在运行 (ws://127.0.0.1:3001)');
+    return;
+  }
+
+  // 2. 没装 → 自动下载安装
+  const indexJs = resolve(APP_DIR, 'index.mjs');
+  if (!existsSync(indexJs)) {
+    console.log('❄️ SnowLuma 未安装，正在自动下载安装…');
+    const installer = resolve(ROOT, 'scripts', 'install-snowluma.mjs');
+    if (!existsSync(installer)) {
+      console.error('   找不到安装脚本 scripts/install-snowluma.mjs');
+      return;
+    }
+    // 静默运行安装（输出会重定向到日志，所以不影响）
+    const r = spawnSync(process.execPath, [installer], { cwd: ROOT, stdio: 'inherit' });
+    if (r.status !== 0) {
+      console.error('   SnowLuma 安装失败');
+      return;
+    }
+  }
+
+  // 3. 启动 SnowLuma（后台）
+  console.log('🚀 启动 SnowLuma…');
+  const { createWriteStream } = await import('node:fs');
+  const logDir = resolve(ROOT, 'logs');
+  if (!existsSync(logDir)) mkdirSync(logDir, { recursive: true });
+  const logFile = resolve(logDir, 'snowluma.log');
+  const out = createWriteStream(logFile, { flags: 'a' });
+  spawn(process.execPath, ['index.mjs'], {
+    cwd: APP_DIR,
+    detached: true,
+    stdio: ['ignore', out, out],
+    windowsHide: true,
+  }).unref();
+
+  // 4. 等待端口启动，最多等 20 秒
+  for (let i = 0; i < 20; i++) {
+    await sleep(1000);
+    const ok = await new Promise(resolve => {
+      const sock = net.connect(3001, '127.0.0.1', () => { sock.end(); resolve(true); });
+      sock.on('error', () => resolve(false));
+      sock.setTimeout(500, () => { sock.destroy(); resolve(false); });
+    });
+    if (ok) {
+      console.log('✅ SnowLuma 已启动，等待扫码登录…（第一次请扫码登录QQ）');
+      console.log('   WebUI: http://127.0.0.1:5099');
+      return;
+    }
+  }
+  console.log('⚠️  SnowLuma 启动超时，请手动检查 logs/snowluma.log');
+}
 
 // ─── 自动发现 SnowLuma 连接信息 ─────────────────────────
 // 静默启动时没有环境变量，就从 snowluma-pkg/app/config/onebot_*.json 里读。
@@ -408,15 +471,27 @@ async function handleEvent(ev) {
 // ─── 启动 ──────────────────────────────────────────────
 async function main() {
   console.log('🤖 QQ 机器人 v4（SnowLuma 协议网关版，纯文本零截图）\n');
+  await ensureSnowLuma();
   await ensureRouter();
 
-  try {
-    await connectSnowLuma();
-  } catch (err) {
-    console.error(`\n❌ ${err.message}`);
-    console.error(`   请先手动启动 SnowLuma：`);
-    console.error(`   snowluma-pkg\\app\\launcher.bat → http://localhost:5099 登录 QQ`);
-    console.error(`   → 网络配置 → WebSocket 服务端 → 监听 3001`);
+  // 等待 SnowLuma 完全起来并且用户登录成功，轮询连接
+  let connected = false;
+  for (let attempt = 0; attempt < 60; attempt++) { // 最多等1分钟
+    try {
+      await connectSnowLuma();
+      connected = true;
+      break;
+    } catch {
+      process.stdout.write('.');
+      await sleep(2000);
+    }
+  }
+  if (!connected) {
+    console.error(`\n\n❌ 等待 SnowLuma 连接超时，请检查：`);
+    console.error(`   1. SnowLuma 是否已启动 → 浏览器打开 http://127.0.0.1:5099`);
+    console.error(`   2. 是否已扫码登录 QQ`);
+    console.error(`   3. 网络配置 → WebSocket 服务端是否开启监听 3001`);
+    console.error(`   日志文件: logs/snowluma.log`);
     stopRouter();
     process.exit(1);
   }

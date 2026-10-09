@@ -68,7 +68,9 @@ function writeInitialCredentialsHint(logFile) {
     const m = [...text.matchAll(/initial credentials: user=(\S+) password=(\S+)/g)].pop();
     if (!m) return;
     const hintFile = resolve(ROOT, 'SnowLuma首次登录密码.txt');
-    if (existsSync(hintFile)) return; // 已经提示过，不覆盖
+    // 已写过同一个密码就不重复写。但如果密码变了（上次没改密就退出，SnowLuma
+    // 会重新生成一个随机密码），必须更新 —— 否则用户拿着旧密码登不进去。
+    if (existsSync(hintFile) && readFileSync(hintFile, 'utf8').includes(`密码: ${m[2]}`)) return;
     const body = [
       'SnowLuma 首次启动的 WebUI 登录凭据',
       '',

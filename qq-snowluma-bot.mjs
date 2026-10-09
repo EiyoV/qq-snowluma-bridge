@@ -567,7 +567,14 @@ async function main() {
   // 这里一直等着就行。用户扫码登录 QQ 可能要几分钟，绝不能设超时退出
   // （踩过：原先 2 分钟上限，用户登录完时机器人已经自己退出了）。
   console.log('⏳ 等待 SnowLuma 连接…');
-  console.log('   （若一直连不上，请确认：QQ 已扫码登录？网络配置里「WebSocket 服务端」3001 已开启？）');
+  console.log(`   地址: ${SNOWLUMA_WS_URL}`);
+  if (SNOWLUMA_TOKEN) {
+    console.log(`   access token: 已读取（${SNOWLUMA_TOKEN.length} 位）`);
+  } else {
+    console.log('   access token: ⚠️ 没读到！');
+    console.log('   （连不上多半就是这个原因。到 WebUI「网络配置 → WebSocket 服务端」');
+    console.log('     确认 token 并保存一次；或把 token 填进 API密钥.txt：SNOWLUMA_TOKEN=xxx）');
+  }
   connectSnowLuma().catch(() => {});
   await firstConnected;
   console.log('🚀 已就绪，开始接收 QQ 消息');

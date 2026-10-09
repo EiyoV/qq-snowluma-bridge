@@ -282,11 +282,22 @@ let selfId = 0;
 let selfNickname = '';
 let wsBackoff = 1000;
 
+// 首次连上时兑现。main 会一直等它 —— 用户扫码登录 QQ 可能要几分钟，
+// 绝不能像之前那样等 2 分钟就退出（那样用户登录完时机器人已经自杀了）。
+let firstConnectResolve;
+const firstConnected = new Promise(r => { firstConnectResolve = r; });
+let everConnected = false;
+
 function connectSnowLuma() {
   return new Promise((res, rej) => {
     const url = SNOWLUMA_TOKEN ? `${SNOWLUMA_WS_URL}?access_token=${encodeURIComponent(SNOWLUMA_TOKEN)}` : SNOWLUMA_WS_URL;
     ws = new WebSocket(url);
-    ws.onopen = () => { console.log(`✅ 已连接 SnowLuma (${SNOWLUMA_WS_URL})`); wsBackoff = 1000; res(); };
+    ws.onopen = () => {
+      console.log(`✅ 已连接 SnowLuma (${SNOWLUMA_WS_URL})`);
+      wsBackoff = 1000;
+      if (!everConnected) { everConnected = true; firstConnectResolve(); }
+      res();
+    };
     ws.onerror = e => { rej(new Error(`WS 连接失败（SnowLuma 没开？端口对吗？token 对吗？）`)); };
     ws.onclose = () => {
       console.log(`⚠️ WS 断开，${Math.round(wsBackoff / 1000)}s 后重连…`);
@@ -552,27 +563,14 @@ async function main() {
   await ensureSnowLuma();
   await ensureRouter();
 
-  // 等待 SnowLuma 完全起来并且用户登录成功，轮询连接
-  let connected = false;
-  for (let attempt = 0; attempt < 60; attempt++) { // 最多等1分钟
-    try {
-      await connectSnowLuma();
-      connected = true;
-      break;
-    } catch {
-      process.stdout.write('.');
-      await sleep(2000);
-    }
-  }
-  if (!connected) {
-    console.error(`\n\n❌ 等待 SnowLuma 连接超时，请检查：`);
-    console.error(`   1. SnowLuma 是否已启动 → 浏览器打开 http://127.0.0.1:5099`);
-    console.error(`   2. 是否已扫码登录 QQ`);
-    console.error(`   3. 网络配置 → WebSocket 服务端是否开启监听 3001`);
-    console.error(`   日志文件: logs/snowluma.log`);
-    stopRouter();
-    process.exit(1);
-  }
+  // 触发首次连接。失败不用管 —— ws.onclose 已经安排好指数退避重连，
+  // 这里一直等着就行。用户扫码登录 QQ 可能要几分钟，绝不能设超时退出
+  // （踩过：原先 2 分钟上限，用户登录完时机器人已经自己退出了）。
+  console.log('⏳ 等待 SnowLuma 连接…');
+  console.log('   （若一直连不上，请确认：QQ 已扫码登录？网络配置里「WebSocket 服务端」3001 已开启？）');
+  connectSnowLuma().catch(() => {});
+  await firstConnected;
+  console.log('🚀 已就绪，开始接收 QQ 消息');
 
   // 重连场景：每次连上都重新拿 login info
   const login = await callAction('get_login_info');

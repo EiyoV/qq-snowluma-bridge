@@ -68,9 +68,13 @@ function writeInitialCredentialsHint(logFile) {
     const m = [...text.matchAll(/initial credentials: user=(\S+) password=(\S+)/g)].pop();
     if (!m) return;
     const hintFile = resolve(ROOT, 'SnowLuma首次登录密码.txt');
-    // 已写过同一个密码就不重复写。但如果密码变了（上次没改密就退出，SnowLuma
-    // 会重新生成一个随机密码），必须更新 —— 否则用户拿着旧密码登不进去。
-    if (existsSync(hintFile) && readFileSync(hintFile, 'utf8').includes(`密码: ${m[2]}`)) return;
+    // 需要重新写的情况：① 密码变了（上次没改密就退出，SnowLuma 会重新生成随机
+    // 密码）；② 这份说明的模板升级了（老文件里没有新版标记）。否则保持不动。
+    const HINT_VERSION_MARKER = '【为什么第 4 步不能跳过】';
+    if (existsSync(hintFile)) {
+      const old = readFileSync(hintFile, 'utf8');
+      if (old.includes(`密码: ${m[2]}`) && old.includes(HINT_VERSION_MARKER)) return;
+    }
     const body = [
       'SnowLuma 首次启动的 WebUI 登录凭据',
       '',
@@ -82,6 +86,26 @@ function writeInitialCredentialsHint(logFile) {
       '  1. 立刻修改密码（SnowLuma 不保存初始随机密码，关掉就找不回了）',
       '  2. 登录 QQ（扫码）',
       '  3. 网络配置 → 打开「WebSocket 服务端」，端口填 3001',
+      '  4. ★ 配置完必须点一次「保存 / 应用」★',
+      '',
+      '【为什么第 4 步不能跳过】',
+      '机器人不会主动去问 SnowLuma 要 access token，而是读 SnowLuma 写下来的',
+      '配置文件：',
+      '    snowluma-pkg/app/config/onebot_<你的QQ号>.json',
+      '',
+      '只有你点了「保存」，SnowLuma 才会把这个文件写到磁盘上。',
+      '没点保存 = 文件不存在 = 机器人读到空 token = 连不上，症状是：',
+      '    · logs/qq-bot.log 里显示「access token: ⚠️ 没读到！」',
+      '    · 或者连接被 401 拒绝、一直「WS 断开，重连…」',
+      '',
+      '所以每次「完全关闭」后重装、或删掉 snowluma-pkg 重新下载之后，',
+      '都要回来重新保存一次这个配置。只关机器人（用「停止机器人.bat」）',
+      '则不受影响，配置一直都在。',
+      '',
+      '如果保存后还是连不上：把这里看到的 access token 复制出来，',
+      '填进 API密钥.txt 里加一行——',
+      '    SNOWLUMA_TOKEN=你复制的token',
+      '然后重启机器人即可。',
       '',
       '以上都做完后，QQ 机器人会自动连上，这个文件就可以删掉了。',
       '',
@@ -90,7 +114,10 @@ function writeInitialCredentialsHint(logFile) {
     console.log(`🔑 首次登录凭据已写入：SnowLuma首次登录密码.txt（${m[1]} / ${m[2]}）`);
     // 静默运行没有窗口，用户很容易找不到这个文件 —— 直接弹记事本给他看
     spawn('notepad', [hintFile], { detached: true, stdio: 'ignore' }).unref();
-  } catch { /* 提示文件失败不影响主流程 */ }
+  } catch (err) {
+    // 提示文件失败不影响主流程，但不能静默吞掉 —— 否则出了问题完全无从查起
+    console.error('⚠️ 生成密码提示文件失败:', err.message);
+  }
 }
 
 async function ensureSnowLuma() {
@@ -98,6 +125,9 @@ async function ensureSnowLuma() {
   //    注意不能用 3001：那个端口要等登录 QQ 并开启 WS 服务端之后才监听。
   if (await isPortOpen(5099)) {
     console.log('✅ SnowLuma 已在运行 (WebUI http://127.0.0.1:5099)');
+    // 已在运行时也要过一遍密码提示文件：SnowLuma 这次不会再打印凭据，但用户
+    // 可能是刚删过 snowluma-pkg，文件还没生成、或需要升级成新版说明模板。
+    writeInitialCredentialsHint(resolve(ROOT, 'logs', 'snowluma.log'));
     return;
   }
 

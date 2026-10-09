@@ -28,22 +28,67 @@ import { spawn, spawnSync } from 'node:child_process';
 import { resolve, dirname } from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
-import { readFileSync, existsSync, readdirSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, openSync } from 'node:fs';
 import net from 'node:net';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)));
 const APP_DIR = resolve(ROOT, 'snowluma-pkg', 'app');
 
+// 是否给子进程带 --use-system-ca（Node 22.15+ 才有；走系统证书库才能在被
+// 代理拦截的网络里访问 GitHub）。VBS 启动器会先探测并置环境变量；直接用
+// node 启动时在这里兜底探测一次。
+const CA_ARGS = (() => {
+  if (process.env.QQBOT_USE_SYSTEM_CA === '1') return ['--use-system-ca'];
+  try {
+    const probe = spawnSync(process.execPath, ['--use-system-ca', '-e', '0'], { stdio: 'ignore' });
+    return probe.status === 0 ? ['--use-system-ca'] : [];
+  } catch { return []; }
+})();
+
 // ─── 自动确保 SnowLuma 已安装+运行 ─────────────────────
-async function ensureSnowLuma() {
-  // 1. 检查 3001 端口是否已经在监听（SnowLuma 已经在跑了）
-  const portOpen = await new Promise(resolve => {
-    const sock = net.connect(3001, '127.0.0.1', () => { sock.end(); resolve(true); });
+function isPortOpen(port, timeout = 1500) {
+  return new Promise(resolve => {
+    const sock = net.connect(port, '127.0.0.1', () => { sock.destroy(); resolve(true); });
     sock.on('error', () => resolve(false));
-    sock.setTimeout(2000, () => { sock.destroy(); resolve(false); });
+    sock.setTimeout(timeout, () => { sock.destroy(); resolve(false); });
   });
-  if (portOpen) {
-    console.log('✅ SnowLuma 已在运行 (ws://127.0.0.1:3001)');
+}
+
+// 首次启动时 SnowLuma 会生成随机 WebUI 密码，只打印在日志里。
+// 静默运行看不到控制台，所以把它抄到一个显眼的记事本里。
+function writeInitialCredentialsHint(logFile) {
+  try {
+    if (!existsSync(logFile)) return;
+    const text = readFileSync(logFile, 'utf8');
+    const m = [...text.matchAll(/initial credentials: user=(\S+) password=(\S+)/g)].pop();
+    if (!m) return;
+    const hintFile = resolve(ROOT, 'SnowLuma首次登录密码.txt');
+    if (existsSync(hintFile)) return; // 已经提示过，不覆盖
+    const body = [
+      'SnowLuma 首次启动的 WebUI 登录凭据',
+      '',
+      '地址: http://127.0.0.1:5099',
+      `账号: ${m[1]}`,
+      `密码: ${m[2]}`,
+      '',
+      '登录后请依次完成：',
+      '  1. 立刻修改密码（SnowLuma 不保存初始随机密码，关掉就找不回了）',
+      '  2. 登录 QQ（扫码）',
+      '  3. 网络配置 → 打开「WebSocket 服务端」，端口填 3001',
+      '',
+      '以上都做完后，QQ 机器人会自动连上，这个文件就可以删掉了。',
+      '',
+    ].join('\n');
+    writeFileSync(hintFile, body, 'utf8');
+    console.log(`🔑 首次登录凭据已写入：SnowLuma首次登录密码.txt（${m[1]} / ${m[2]}）`);
+  } catch { /* 提示文件失败不影响主流程 */ }
+}
+
+async function ensureSnowLuma() {
+  // 1. SnowLuma 是否已经在跑 —— 看 WebUI 端口 5099。
+  //    注意不能用 3001：那个端口要等登录 QQ 并开启 WS 服务端之后才监听。
+  if (await isPortOpen(5099)) {
+    console.log('✅ SnowLuma 已在运行 (WebUI http://127.0.0.1:5099)');
     return;
   }
 
@@ -56,8 +101,7 @@ async function ensureSnowLuma() {
       console.error('   找不到安装脚本 scripts/install-snowluma.mjs');
       return;
     }
-    // 静默运行安装（输出会重定向到日志，所以不影响）
-    const r = spawnSync(process.execPath, [installer], { cwd: ROOT, stdio: 'inherit' });
+    const r = spawnSync(process.execPath, [...CA_ARGS, installer], { cwd: ROOT, stdio: 'inherit' });
     if (r.status !== 0) {
       console.error('   SnowLuma 安装失败');
       return;
@@ -66,29 +110,29 @@ async function ensureSnowLuma() {
 
   // 3. 启动 SnowLuma（后台）
   console.log('🚀 启动 SnowLuma…');
-  const { createWriteStream } = await import('node:fs');
   const logDir = resolve(ROOT, 'logs');
   if (!existsSync(logDir)) mkdirSync(logDir, { recursive: true });
   const logFile = resolve(logDir, 'snowluma.log');
-  const out = createWriteStream(logFile, { flags: 'a' });
+  // 必须用 openSync：createWriteStream 是异步打开的，fd 仍是 null 时 spawn 会拒绝
+  const logFd = openSync(logFile, 'a');
   spawn(process.execPath, ['index.mjs'], {
     cwd: APP_DIR,
     detached: true,
-    stdio: ['ignore', out, out],
+    stdio: ['ignore', logFd, logFd],
     windowsHide: true,
   }).unref();
 
-  // 4. 等待端口启动，最多等 20 秒
-  for (let i = 0; i < 20; i++) {
+  // 4. 等 WebUI 端口起来（最多 40 秒，首次启动要初始化数据）
+  for (let i = 0; i < 40; i++) {
     await sleep(1000);
-    const ok = await new Promise(resolve => {
-      const sock = net.connect(3001, '127.0.0.1', () => { sock.end(); resolve(true); });
-      sock.on('error', () => resolve(false));
-      sock.setTimeout(500, () => { sock.destroy(); resolve(false); });
-    });
-    if (ok) {
-      console.log('✅ SnowLuma 已启动，等待扫码登录…（第一次请扫码登录QQ）');
-      console.log('   WebUI: http://127.0.0.1:5099');
+    if (await isPortOpen(5099)) {
+      console.log('✅ SnowLuma 已启动 (WebUI http://127.0.0.1:5099)');
+      writeInitialCredentialsHint(logFile);
+      // 自动打开浏览器，省得用户自己找地址
+      spawn('cmd', ['/c', 'start', '', 'http://127.0.0.1:5099'], {
+        detached: true, stdio: 'ignore', windowsHide: true,
+      }).unref();
+      console.log('🌐 已打开浏览器 → 请登录 QQ（未登录前机器人会一直重试连接）');
       return;
     }
   }

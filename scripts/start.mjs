@@ -28,6 +28,14 @@ const CONFIG_PATH = resolve(ROOT, 'config.json');
 const CONFIG_EXAMPLE = resolve(ROOT, 'config.example.json');
 const DSH_CRED = resolve(homedir(), '.dsh', '.credentials.yaml');
 
+// --use-system-ca（Node 22.15+）走系统证书库，被代理拦截时才能访问 GitHub
+const CA_ARGS = (() => {
+  try {
+    const probe = spawnSync(process.execPath, ['--use-system-ca', '-e', '0'], { stdio: 'ignore' });
+    return probe.status === 0 ? ['--use-system-ca'] : [];
+  } catch { return []; }
+})();
+
 // ── 0. 确保 API key 已配置 ──
 function envHasKeys() {
   if (!existsSync(ENV_PATH)) return false;
@@ -84,7 +92,7 @@ async function ensureSnowLuma() {
     return;
   }
   console.log('📦 SnowLuma 未安装，自动下载中…');
-  const r = spawnSync(process.execPath, ['scripts/install-snowluma.mjs'], {
+  const r = spawnSync(process.execPath, [...CA_ARGS, 'scripts/install-snowluma.mjs'], {
     cwd: ROOT, stdio: 'inherit',
   });
   if (r.status !== 0) throw new Error('SnowLuma 安装失败');

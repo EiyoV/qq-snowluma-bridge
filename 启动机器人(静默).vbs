@@ -28,6 +28,15 @@ If Not fso.FolderExists(logDir) Then fso.CreateFolder(logDir)
 
 sh.CurrentDirectory = rootDir
 
+' --use-system-ca (Node 22.15+) trusts the Windows cert store, which is needed
+' behind TLS-inspecting proxies. Probe once; fall back to plain node if unsupported.
+Dim caArg
+caArg = ""
+If sh.Run("cmd /c node --use-system-ca -e ""0"" >nul 2>&1", 0, True) = 0 Then
+  caArg = "--use-system-ca "
+  sh.Environment("Process")("QQBOT_USE_SYSTEM_CA") = "1"
+End If
+
 ' 0 = hidden window, False = do not wait.
 ' Wrap with cmd /c to redirect output into the log file.
-sh.Run "cmd /c node qq-snowluma-bot.mjs >> logs\qq-bot.log 2>&1", 0, False
+sh.Run "cmd /c node " & caArg & "qq-snowluma-bot.mjs >> logs\qq-bot.log 2>&1", 0, False

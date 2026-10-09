@@ -9,7 +9,7 @@
  *   --force  强制重新下载（升级用）
  */
 
-import { existsSync, mkdirSync, rmSync, readdirSync, cpSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, rmSync, readdirSync, cpSync, writeFileSync, readFileSync } from 'node:fs';
 import { createWriteStream } from 'node:fs';
 import { pipeline } from 'node:stream/promises';
 import { resolve } from 'node:path';
@@ -50,6 +50,9 @@ async function download(url, dest) {
       const res = await fetch(mirrorUrl, { redirect: 'follow', signal: AbortSignal.timeout(120000) });
       if (res.ok) {
         await pipeline(res.body, createWriteStream(dest));
+        // 校验确实是 ZIP（镜像有时会返回 200 的错误页）
+        const head = readFileSync(dest).subarray(0, 2).toString('latin1');
+        if (head !== 'PK') throw new Error('返回的不是 ZIP 文件');
         console.log(`   下载成功!`);
         return;
       }

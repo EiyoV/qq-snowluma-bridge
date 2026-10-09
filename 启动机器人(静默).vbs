@@ -37,6 +37,18 @@ If sh.Run("cmd /c node --use-system-ca -e ""0"" >nul 2>&1", 0, True) = 0 Then
   sh.Environment("Process")("QQBOT_USE_SYSTEM_CA") = "1"
 End If
 
+' First run on a new machine: no API key yet. Show the setup wizard in a real
+' window and wait for it. Without this the bot would connect to QQ but never
+' reply, and in silent mode the user would see no error at all.
+If sh.Run("cmd /c node " & caArg & "scripts\check-config.mjs", 0, True) <> 0 Then
+  MsgBox "No API key configured yet." & vbCrLf & vbCrLf & _
+         "A setup wizard will open. Paste at least one API key, then the bot" & vbCrLf & _
+         "starts by itself. API keys can be edited later in the text file" & vbCrLf & _
+         "next to this launcher.", _
+         64, "QQ Bot - first run"
+  sh.Run "cmd /c node " & caArg & "scripts\setup.mjs", 1, True
+End If
+
 ' 0 = hidden window, False = do not wait.
 ' Wrap with cmd /c to redirect output into the log file.
 sh.Run "cmd /c node " & caArg & "qq-snowluma-bot.mjs >> logs\qq-bot.log 2>&1", 0, False

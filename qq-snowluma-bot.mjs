@@ -30,6 +30,7 @@ import { setTimeout as sleep } from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, openSync } from 'node:fs';
 import net from 'node:net';
+import { hasApiKeys } from './scripts/lib/ensure-config.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)));
 const APP_DIR = resolve(ROOT, 'snowluma-pkg', 'app');
@@ -163,18 +164,22 @@ function detectSnowLuma() {
 const DETECTED_SNOWLUMA = detectSnowLuma();
 
 // ─── 加载外部配置（API密钥.txt 优先于 .env） ───────────
+// 注意：这里写进 process.env 的值会传给 llm-router，而 process.env 的优先级
+// 高于 .env —— 所以模板里的示例值（your-xxx）必须跳过，否则会把真 key 覆盖掉。
 try {
   const apiKeysPath = resolve(ROOT, 'API密钥.txt');
   if (existsSync(apiKeysPath)) {
     const content = readFileSync(apiKeysPath, 'utf8');
-    const lines = content.split(/\r?\n/);
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith('#')) continue;
-      const [key, value] = trimmed.split('=', 2);
-      if (key && value) {
-        process.env[key.trim()] = value.trim();
-      }
+    for (const raw of content.split(/\r?\n/)) {
+      const line = raw.trim();
+      if (!line || line.startsWith('#')) continue;
+      const eq = line.indexOf('=');   // 不能用 split('=', 2)：值里含 = 会被截断
+      if (eq < 1) continue;
+      const key = line.slice(0, eq).trim();
+      const value = line.slice(eq + 1).trim();
+      if (!key || !value) continue;
+      if (/^(your-|sk-xxxx|xxxx)/i.test(value)) continue;
+      process.env[key] = value;
     }
   }
 } catch (err) {
@@ -515,6 +520,20 @@ async function handleEvent(ev) {
 // ─── 启动 ──────────────────────────────────────────────
 async function main() {
   console.log('🤖 QQ 机器人 v4（SnowLuma 协议网关版，纯文本零截图）\n');
+
+  // 没有 API key 的话，机器人连上 QQ 也不会回话 —— 先检查，别让它静默失败
+  if (!hasApiKeys(ROOT)) {
+    if (process.stdin.isTTY) {
+      console.log('🔑 还没配置 API key，启动配置向导…\n');
+      spawnSync(process.execPath, ['scripts/setup.mjs'], { cwd: ROOT, stdio: 'inherit' });
+    }
+    if (!hasApiKeys(ROOT)) {
+      console.error('❌ 没有可用的 API key，机器人不会回话。');
+      console.error('   编辑项目根目录的 API密钥.txt 填入至少一个 key，或运行：npm run setup');
+      process.exit(1);
+    }
+  }
+
   await ensureSnowLuma();
   await ensureRouter();
 

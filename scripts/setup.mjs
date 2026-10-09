@@ -191,8 +191,16 @@ async function main() {
 
   console.log('\n═══════════════════════════════════════');
   console.log('  🎉 配置完成！');
-  console.log('  下一步: npm run start-all');
+  console.log('  下一步: 双击「启动机器人(静默).vbs」，或 npm run start-all');
   console.log('═══════════════════════════════════════');
+
+  // 从 VBS 以独立窗口启动时，窗口会在退出瞬间关掉，加个停顿让人看清结果
+  if (process.stdin.isTTY) {
+    await new Promise(r => {
+      const pause = readline.createInterface({ input: process.stdin, output: process.stdout });
+      pause.question('\n按回车关闭…', () => { pause.close(); r(); });
+    });
+  }
 }
 
 main().catch(err => {

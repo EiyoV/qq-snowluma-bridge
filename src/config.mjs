@@ -29,6 +29,20 @@ export function loadEnvFile(path = resolve(ROOT, '.env')) {
   return out;
 }
 
+/**
+ * API密钥.txt —— 给用户直接改的明文配置，比 .env 好找。
+ * 里面带了模板示例值（your-xxx），必须跳过，否则会把 .env 里的真 key 覆盖掉。
+ */
+export function loadUserApiKeys(path = resolve(ROOT, 'API密钥.txt')) {
+  const raw = loadEnvFile(path);
+  const out = {};
+  for (const [k, v] of Object.entries(raw)) {
+    if (!v || /^(your-|sk-xxxx|xxxx)/i.test(v)) continue;
+    out[k] = v;
+  }
+  return out;
+}
+
 function requireField(obj, field, where) {
   if (obj[field] === undefined || obj[field] === null || obj[field] === '') {
     throw new Error(`配置错误：${where} 缺少字段 "${field}"`);
@@ -42,7 +56,9 @@ function requireField(obj, field, where) {
  */
 export function loadConfig(configPath = process.env.LLM_ROUTER_CONFIG ?? resolve(ROOT, 'config.json')) {
   const fileEnv = loadEnvFile();
-  const env = { ...fileEnv, ...process.env };
+  // 优先级：process.env > API密钥.txt > .env
+  // API密钥.txt 排在 .env 前面，这样用户改那个记事本就能覆盖 .env
+  const env = { ...fileEnv, ...loadUserApiKeys(), ...process.env };
 
   if (!existsSync(configPath)) {
     throw new Error(

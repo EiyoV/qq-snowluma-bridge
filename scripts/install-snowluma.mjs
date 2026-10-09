@@ -37,11 +37,27 @@ async function getLatestRelease() {
 }
 
 async function download(url, dest) {
-  console.log(`⬇️  下载中…`);
-  const res = await fetch(url, { redirect: 'follow' });
-  if (!res.ok) throw new Error(`下载失败: ${res.status}`);
-  await pipeline(res.body, createWriteStream(dest));
-  console.log(`   已下载到: ${dest}`);
+  // 国内镜像加速列表，自动尝试
+  const mirrors = [
+    url,
+    `https://ghproxy.com/${url}`,
+    `https://mirror.ghproxy.com/${url}`,
+    `https://gh-proxy.com/${url}`,
+  ];
+  for (const mirrorUrl of mirrors) {
+    try {
+      console.log(`⬇️  尝试下载: ${mirrorUrl.split('/').slice(0,3).join('/')}...`);
+      const res = await fetch(mirrorUrl, { redirect: 'follow', signal: AbortSignal.timeout(120000) });
+      if (res.ok) {
+        await pipeline(res.body, createWriteStream(dest));
+        console.log(`   下载成功!`);
+        return;
+      }
+    } catch (err) {
+      console.log(`   失败，切换镜像... (${err.message})`);
+    }
+  }
+  throw new Error(`所有镜像下载失败，请手动下载 ${url} 解压到 snowluma-pkg/app/`);
 }
 
 function extract(zipPath, targetDir) {

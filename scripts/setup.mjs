@@ -139,6 +139,48 @@ async function main() {
   const count = [...written].filter(k => env[k]).length;
   console.log(`\n✅ .env 已写入（${count} 个 key）`);
 
+  // ── 同步到 API密钥.txt ──
+  try {
+    const apiKeysPath = resolve(ROOT, 'API密钥.txt');
+    if (existsSync(apiKeysPath)) {
+      // 读取现有文件，保留注释部分，只更新值
+      const existingLines = readFileSync(apiKeysPath, 'utf8').split(/\r?\n/);
+      const keyMap = new Map();
+      const commentLines = [];
+      for (const line of existingLines) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith('#')) {
+          commentLines.push(line);
+        } else {
+          const [key, value] = trimmed.split('=', 2);
+          if (key && value) {
+            keyMap.set(key.trim(), value.trim());
+          }
+        }
+      }
+      // 用新的env值覆盖
+      for (const k of GROUPS.flatMap(g => g.keys)) {
+        if (env[k.env]) {
+          keyMap.set(k.env, env[k.env]);
+        }
+      }
+      // 其他已有key也保留
+      for (const [k, v] of Object.entries(env)) {
+        if (v) keyMap.set(k, v);
+      }
+      // 写回
+      const outLines = [...commentLines];
+      if (commentLines.length) outLines.push('');
+      for (const [k, v] of keyMap) {
+        outLines.push(`${k}=${v}`);
+      }
+      writeFileSync(apiKeysPath, outLines.join('\n'), 'utf8');
+      console.log(`✅ API密钥.txt 已同步`);
+    }
+  } catch (err) {
+    console.warn(`⚠️ API密钥.txt 同步失败: ${err.message}`);
+  }
+
   // ── 复制 config.json ──
   if (!existsSync(CONFIG_PATH) && existsSync(CONFIG_EXAMPLE)) {
     copyFileSync(CONFIG_EXAMPLE, CONFIG_PATH);

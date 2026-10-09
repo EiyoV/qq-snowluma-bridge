@@ -7,6 +7,11 @@
 
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { homedir } from 'node:os';
+
+// DSH 桌面版把 key 存在这里；装过 DSH 并配过 key 的机器可以直接抄过来
+const DSH_CRED = resolve(homedir(), '.dsh', '.credentials.yaml');
 
 // 只认长这样的变量名才算 key，避免 OLLAMA_BASE_URL 之类有值就被误判成"已配置"
 const KEY_NAME_RE = /(_API_KEY|_TOKEN|_ACCESS_KEY|_SECRET_KEY|_SECRET)$/;
@@ -39,4 +44,29 @@ export function hasApiKeys(root) {
     }
   }
   return false;
+}
+
+/**
+ * 确保有可用 API key，能自动搞定的就不麻烦用户。
+ *
+ * @returns {'ok'|'imported'|'missing'}
+ *   ok       —— 本来就已经配好了
+ *   imported —— 刚从 DSH 凭据库自动导入成功（用户什么都不用做）
+ *   missing  —— 确实没有，需要人工配置（弹向导或手填）
+ */
+export function ensureApiKeys(root) {
+  if (hasApiKeys(root)) return 'ok';
+
+  // 装了 DSH 且配过 key：直接导入，省得用户手抄一遍
+  if (existsSync(DSH_CRED)) {
+    const importer = resolve(root, 'src', 'import-dsh-credentials.mjs');
+    if (existsSync(importer)) {
+      const r = spawnSync(process.execPath, [importer, '--write'], {
+        cwd: root, stdio: 'pipe', encoding: 'utf8',
+      });
+      if (r.status === 0 && hasApiKeys(root)) return 'imported';
+    }
+  }
+
+  return 'missing';
 }

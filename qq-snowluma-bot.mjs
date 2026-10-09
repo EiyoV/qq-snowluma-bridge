@@ -30,7 +30,7 @@ import { setTimeout as sleep } from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, openSync } from 'node:fs';
 import net from 'node:net';
-import { hasApiKeys } from './scripts/lib/ensure-config.mjs';
+import { ensureApiKeys, hasApiKeys } from './scripts/lib/ensure-config.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)));
 const APP_DIR = resolve(ROOT, 'snowluma-pkg', 'app');
@@ -521,8 +521,12 @@ async function handleEvent(ev) {
 async function main() {
   console.log('🤖 QQ 机器人 v4（SnowLuma 协议网关版，纯文本零截图）\n');
 
-  // 没有 API key 的话，机器人连上 QQ 也不会回话 —— 先检查，别让它静默失败
-  if (!hasApiKeys(ROOT)) {
+  // 没有 API key 的话，机器人连上 QQ 也不会回话 —— 先检查，别让它静默失败。
+  // 装了 DSH 且配过 key 的机器会被自动导入，不用用户手抄。
+  const keyState = ensureApiKeys(ROOT);
+  if (keyState === 'imported') {
+    console.log('✅ 已从 DSH 凭据库自动导入 API key');
+  } else if (keyState === 'missing') {
     if (process.stdin.isTTY) {
       console.log('🔑 还没配置 API key，启动配置向导…\n');
       spawnSync(process.execPath, ['scripts/setup.mjs'], { cwd: ROOT, stdio: 'inherit' });

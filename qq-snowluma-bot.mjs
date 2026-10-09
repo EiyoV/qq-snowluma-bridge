@@ -88,6 +88,8 @@ function writeInitialCredentialsHint(logFile) {
     ].join('\n');
     writeFileSync(hintFile, body, 'utf8');
     console.log(`🔑 首次登录凭据已写入：SnowLuma首次登录密码.txt（${m[1]} / ${m[2]}）`);
+    // 静默运行没有窗口，用户很容易找不到这个文件 —— 直接弹记事本给他看
+    spawn('notepad', [hintFile], { detached: true, stdio: 'ignore' }).unref();
   } catch { /* 提示文件失败不影响主流程 */ }
 }
 

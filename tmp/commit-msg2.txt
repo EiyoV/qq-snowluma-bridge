@@ -1,8 +1,0 @@
-feat: 百炼也按模型分账 + 渠道目录补火山接入点池
-
-- dashscope-text 打开 perModel：百炼的免费额度是**每个模型各自** 100 万 token / 90 天
-  （官方明说"各模型额度独立、用完不会自动切换"），所以 qwen-plus 烧完应当自动换
-  qwen-turbo，而不是整条渠道一起停
-- catalog.json 拆出 volcano-endpoints（/api/v3 接入点池）与 volcano（/coding/v3 订阅），
-  并补上 2026-10-10 实测结论：接入点 ep-m-... 可调、模型名直调返回 404、
-  账号欠费时所有按量接入点一律 403 overdue balance

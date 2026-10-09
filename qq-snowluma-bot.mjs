@@ -243,8 +243,23 @@ const HEALTHZ_URL = process.env.LLM_ROUTER_URL
   ? process.env.LLM_ROUTER_URL.replace(/\/v1\/?.*$/, '') + '/healthz'
   : null;
 
-// 群白名单：空数组 = 所有群都响应（但仍需 @自己）；填 QQ 群号 = 只响应这些群
-const GROUP_WHITELIST = [];
+// 群白名单：从「群聊白名单.txt」读。文件里没填群号 = 所有群都响应（但仍需 @自己）；
+// 填了群号 = 只响应这些群。
+const GROUP_WHITELIST = (() => {
+  try {
+    const p = resolve(ROOT, '群聊白名单.txt');
+    if (!existsSync(p)) return [];
+    return readFileSync(p, 'utf8')
+      .split(/\r?\n/)
+      .map(l => l.trim())
+      .filter(l => l && !l.startsWith('#'))
+      .map(Number)
+      .filter(n => Number.isFinite(n) && n > 0);
+  } catch (err) {
+    console.warn('⚠️ 读取群聊白名单失败，按「不限制」处理:', err.message);
+    return [];
+  }
+})();
 // 私聊白名单：空数组 = 所有私聊都回；填 QQ 号 = 只回这些人
 const PRIVATE_WHITELIST = [];
 
@@ -617,6 +632,11 @@ async function main() {
   connectSnowLuma().catch(() => {});
   await firstConnected;
   console.log('🚀 已就绪，开始接收 QQ 消息');
+  if (GROUP_WHITELIST.length) {
+    console.log(`📋 群聊白名单已启用：只在 ${GROUP_WHITELIST.length} 个群回话 → ${GROUP_WHITELIST.join(', ')}`);
+  } else {
+    console.log('📋 群聊白名单：未设置（所有群被 @ 都会回）');
+  }
 
   // 重连场景：每次连上都重新拿 login info
   const login = await callAction('get_login_info');

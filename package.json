@@ -1,0 +1,30 @@
+{
+  "name": "llm-router",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "零依赖 OpenAI 兼容多 provider 自动 fallback 代理：按能力路由 + 429/5xx 冷却接管 + 本地模型兜底",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.mjs",
+    "probe": "node src/probe.mjs",
+    "status": "node src/status.mjs",
+    "import-dsh": "node src/import-dsh-credentials.mjs",
+    "discover": "node src/discover.mjs",
+    "test": "node test/run-tests.mjs",
+    "qq-bot": "node qq-desktop-bot.mjs",
+    "qq-bot2": "node qq-snowluma-bot.mjs",
+    "qq-bot-old": "node web-qq-bot.js",
+    "install-snowluma": "node scripts/install-snowluma.mjs",
+    "update-snowluma": "node scripts/install-snowluma.mjs --force",
+    "setup": "node scripts/setup.mjs",
+    "start-all": "node scripts/start.mjs"
+  },
+  "dependencies": {
+    "@snowluma/sdk": "^1.14.22",
+    "axios": "^1.20.0",
+    "puppeteer": "^25.13.0"
+  }
+}

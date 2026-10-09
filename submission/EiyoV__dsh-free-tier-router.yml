@@ -1,0 +1,6 @@
+url: https://github.com/EiyoV/dsh-free-tier-router
+name: EiyoV/dsh-free-tier-router
+category: model
+description:
+  en: Merges several providers' free LLM tiers into one channel pool, with automatic failover, per-task routing for image and tool-calling requests, and priorities auto-tuned from measured token cost.
+  zh: 把多个平台的免费额度合成一个渠道池：自动故障切换、按任务自动挑渠道（识图 / 工具调用），并按实测 token 开销自动排序优先级。

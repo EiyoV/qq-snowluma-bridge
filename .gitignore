@@ -1,0 +1,14 @@
+# 真实密钥与真实配置绝不进 git
+config.json
+.env
+.env.*
+!/.env.example
+
+# 运行期产物
+data/
+*.log
+node_modules/
+
+# 第三方程序（启动脚本会自动下载）
+snowluma-pkg/
+snowluma/

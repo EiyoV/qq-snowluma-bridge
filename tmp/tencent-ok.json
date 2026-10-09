@@ -1,0 +1,150 @@
+{
+  "total": 49,
+  "ok": [
+    {
+      "id": "hy-mt2-plus",
+      "tokens": 4,
+      "ms": 630
+    },
+    {
+      "id": "hy-mt2-lite",
+      "tokens": 5,
+      "ms": 407
+    },
+    {
+      "id": "hunyuan-role-latest",
+      "tokens": 5,
+      "ms": 455
+    },
+    {
+      "id": "hy-role",
+      "tokens": 5,
+      "ms": 824
+    },
+    {
+      "id": "deepseek-v4-pro",
+      "tokens": 7,
+      "ms": 2367
+    },
+    {
+      "id": "mimo-v2.6-flash",
+      "tokens": 9,
+      "ms": 1848
+    },
+    {
+      "id": "mimo-v2.6-pro",
+      "tokens": 9,
+      "ms": 3926
+    },
+    {
+      "id": "kimi-k2.7-code",
+      "tokens": 10,
+      "ms": 934
+    },
+    {
+      "id": "kimi-k2.7-code-highspeed",
+      "tokens": 10,
+      "ms": 1054
+    },
+    {
+      "id": "kimi-k2.6",
+      "tokens": 10,
+      "ms": 1077
+    },
+    {
+      "id": "step-5-preview",
+      "tokens": 13,
+      "ms": 1048
+    },
+    {
+      "id": "glm-5.2",
+      "tokens": 14,
+      "ms": 925
+    },
+    {
+      "id": "glm-5.3-flash",
+      "tokens": 14,
+      "ms": 1024
+    },
+    {
+      "id": "hy3",
+      "tokens": 14,
+      "ms": 1135
+    },
+    {
+      "id": "glm-5.3-flashx",
+      "tokens": 14,
+      "ms": 1202
+    },
+    {
+      "id": "glm-5.3",
+      "tokens": 14,
+      "ms": 1205
+    },
+    {
+      "id": "hy-mt2-pro",
+      "tokens": 17,
+      "ms": 526
+    },
+    {
+      "id": "hunyuan-t1-vision-20250916",
+      "tokens": 18,
+      "ms": 1243
+    },
+    {
+      "id": "hy4-preview",
+      "tokens": 23,
+      "ms": 1531
+    },
+    {
+      "id": "deepseek/deepseek-flash",
+      "tokens": 32,
+      "ms": 629
+    },
+    {
+      "id": "deepseek/deepseek-v4-flash-vision-exp",
+      "tokens": 32,
+      "ms": 882
+    },
+    {
+      "id": "deepseek-v4-flash-202605",
+      "tokens": 32,
+      "ms": 1002
+    },
+    {
+      "id": "deepseek-v4.1-flash",
+      "tokens": 32,
+      "ms": 1351
+    },
+    {
+      "id": "minimax-m2.7",
+      "tokens": 45,
+      "ms": 703
+    },
+    {
+      "id": "deepseek-v4-pro-0813",
+      "tokens": 85,
+      "ms": 1337
+    },
+    {
+      "id": "deepseek-v4-pro-202606",
+      "tokens": 85,
+      "ms": 1399
+    },
+    {
+      "id": "kimi-k3",
+      "tokens": 87,
+      "ms": 1326
+    },
+    {
+      "id": "kimi-k2.8-preview",
+      "tokens": 90,
+      "ms": 1120
+    },
+    {
+      "id": "minimax-m3",
+      "tokens": 178,
+      "ms": 1897
+    }
+  ]
+}

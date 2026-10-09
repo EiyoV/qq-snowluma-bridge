@@ -1,0 +1,730 @@
+[
+  {
+    "model": "doubao-lite-4k-pretrain-character-240516",
+    "status": 404,
+    "ms": 85,
+    "tokens": null,
+    "error": "The model or endpoint doubao-lite-4k-pretrain-character-240516 does not exist or you do not have access to it. Request id: 02179155839799770"
+  },
+  {
+    "model": "qwen3-32b-20250429",
+    "status": 404,
+    "ms": 85,
+    "tokens": null,
+    "error": "The model or endpoint qwen3-32b-20250429 does not exist or you do not have access to it. Request id: 0217915584000427097180e458ae3c6e1603667"
+  },
+  {
+    "model": "glm-4-5-air-20250728",
+    "status": 404,
+    "ms": 89,
+    "tokens": null,
+    "error": "The model or endpoint glm-4-5-air-20250728 does not exist or you do not have access to it. Request id: 0217915583999537097180e458ae3c6e16036"
+  },
+  {
+    "model": "doubao-smart-router-250928",
+    "status": 404,
+    "ms": 93,
+    "tokens": null,
+    "error": "The model or endpoint doubao-smart-router-250928 does not exist or you do not have access to it. Request id: 0217915584001888c80d243bafb9057"
+  },
+  {
+    "model": "doubao-pro-32k-character-240528",
+    "status": 404,
+    "ms": 96,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-character-240528 does not exist or you do not have access to it. Request id: 0217915583980118c80d243baf"
+  },
+  {
+    "model": "deepseek-r1-250528",
+    "status": 404,
+    "ms": 98,
+    "tokens": null,
+    "error": "The model or endpoint deepseek-r1-250528 does not exist or you do not have access to it. Request id: 0217915583996137097180e458ae3c6e1603667"
+  },
+  {
+    "model": "qwen3-14b-20250429",
+    "status": 404,
+    "ms": 100,
+    "tokens": null,
+    "error": "The model or endpoint qwen3-14b-20250429 does not exist or you do not have access to it. Request id: 02179155840046388db556329240132465f0386"
+  },
+  {
+    "model": "doubao-1.5-vision-pro-250328",
+    "status": 404,
+    "ms": 101,
+    "tokens": null,
+    "error": "The model or endpoint doubao-1.5-vision-pro-250328 does not exist or you do not have access to it. Request id: 02179155839928988db5563292401"
+  },
+  {
+    "model": "doubao-seed-1-6-lite-251015",
+    "status": 404,
+    "ms": 101,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-1-6-lite-251015 does not exist or you do not have access to it. Request id: 02179155840025888db55632924013"
+  },
+  {
+    "model": "doubao-lite-32k-character-241015",
+    "status": 404,
+    "ms": 102,
+    "tokens": null,
+    "error": "The model or endpoint doubao-lite-32k-character-241015 does not exist or you do not have access to it. Request id: 0217915583986247097180e45"
+  },
+  {
+    "model": "doubao-1-5-thinking-pro-m-250428",
+    "status": 404,
+    "ms": 102,
+    "tokens": null,
+    "error": "The model or endpoint doubao-1-5-thinking-pro-m-250428 does not exist or you do not have access to it. Request id: 02179155839952188db556329"
+  },
+  {
+    "model": "doubao-lite-4k-character-240828",
+    "status": 404,
+    "ms": 103,
+    "tokens": null,
+    "error": "The model or endpoint doubao-lite-4k-character-240828 does not exist or you do not have access to it. Request id: 0217915583984047097180e458"
+  },
+  {
+    "model": "doubao-seed-1-6-flash-250828",
+    "status": 404,
+    "ms": 103,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-1-6-flash-250828 does not exist or you do not have access to it. Request id: 02179155839994688db5563292401"
+  },
+  {
+    "model": "doubao-seed-code-preview-251028",
+    "status": 404,
+    "ms": 103,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-code-preview-251028 does not exist or you do not have access to it. Request id: 02179155840036088db5563292"
+  },
+  {
+    "model": "doubao-pro-4k-240515",
+    "status": 404,
+    "ms": 104,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-4k-240515 does not exist or you do not have access to it. Request id: 02179155839780688db556329240132465f03"
+  },
+  {
+    "model": "doubao-seed-1-6-flash-250615",
+    "status": 404,
+    "ms": 104,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-1-6-flash-250615 does not exist or you do not have access to it. Request id: 0217915583996298c80d243bafb90"
+  },
+  {
+    "model": "qwen2-5-72b-20240919",
+    "status": 404,
+    "ms": 104,
+    "tokens": null,
+    "error": "The model or endpoint qwen2-5-72b-20240919 does not exist or you do not have access to it. Request id: 02179155840004988db556329240132465f03"
+  },
+  {
+    "model": "doubao-1-5-pro-32k-character-250715",
+    "status": 404,
+    "ms": 105,
+    "tokens": null,
+    "error": "The model or endpoint doubao-1-5-pro-32k-character-250715 does not exist or you do not have access to it. Request id: 0217915583997308c80d24"
+  },
+  {
+    "model": "deepseek-v3-1-terminus",
+    "status": 404,
+    "ms": 105,
+    "tokens": null,
+    "error": "The model or endpoint deepseek-v3-1-terminus does not exist or you do not have access to it. Request id: 02179155840015688db556329240132465f"
+  },
+  {
+    "model": "doubao-pro-32k-functioncall-241028",
+    "status": 404,
+    "ms": 106,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-functioncall-241028 does not exist or you do not have access to it. Request id: 0217915583986491dd29167"
+  },
+  {
+    "model": "doubao-pro-32k-browsing-241115",
+    "status": 404,
+    "ms": 107,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-browsing-241115 does not exist or you do not have access to it. Request id: 0217915583986598c80d243bafb"
+  },
+  {
+    "model": "deepseek-v4-flash-260425",
+    "status": 404,
+    "ms": 107,
+    "tokens": null,
+    "error": "The model or endpoint deepseek-v4-flash-260425 does not exist or you do not have access to it. Request id: 0217915584020681dd291674643982da4"
+  },
+  {
+    "model": "deepseek-r1-distill-qwen-32b-250120",
+    "status": 404,
+    "ms": 108,
+    "tokens": null,
+    "error": "The model or endpoint deepseek-r1-distill-qwen-32b-250120 does not exist or you do not have access to it. Request id: 0217915583991068c80d24"
+  },
+  {
+    "model": "doubao-lite-32k-240828",
+    "status": 404,
+    "ms": 110,
+    "tokens": null,
+    "error": "The model or endpoint doubao-lite-32k-240828 does not exist or you do not have access to it. Request id: 02179155839849488db556329240132465f"
+  },
+  {
+    "model": "doubao-pro-256k-241115",
+    "status": 404,
+    "ms": 110,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-256k-241115 does not exist or you do not have access to it. Request id: 0217915583987658c80d243bafb90575ac6"
+  },
+  {
+    "model": "doubao-seed-1-6-251015",
+    "status": 404,
+    "ms": 110,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-1-6-251015 does not exist or you do not have access to it. Request id: 0217915584002301dd291674643982da436"
+  },
+  {
+    "model": "doubao-pro-32k-241215",
+    "status": 404,
+    "ms": 111,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-241215 does not exist or you do not have access to it. Request id: 0217915583988768c80d243bafb90575ac6c"
+  },
+  {
+    "model": "doubao-pro-32k-browsing-240615",
+    "status": 404,
+    "ms": 112,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-browsing-240615 does not exist or you do not have access to it. Request id: 0217915583981088c80d243bafb"
+  },
+  {
+    "model": "doubao-pro-32k-240828",
+    "status": 404,
+    "ms": 113,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-240828 does not exist or you do not have access to it. Request id: 0217915583983711dd291674643982da436c"
+  },
+  {
+    "model": "doubao-lite-128k-240828",
+    "status": 404,
+    "ms": 118,
+    "tokens": null,
+    "error": "The model or endpoint doubao-lite-128k-240828 does not exist or you do not have access to it. Request id: 0217915583985057097180e458ae3c6e16"
+  },
+  {
+    "model": "doubao-1-5-pro-256k-250115",
+    "status": 404,
+    "ms": 118,
+    "tokens": null,
+    "error": "The model or endpoint doubao-1-5-pro-256k-250115 does not exist or you do not have access to it. Request id: 0217915583989868c80d243bafb9057"
+  },
+  {
+    "model": "doubao-1-5-pro-32k-character-250228",
+    "status": 404,
+    "ms": 118,
+    "tokens": null,
+    "error": "The model or endpoint doubao-1-5-pro-32k-character-250228 does not exist or you do not have access to it. Request id: 02179155839917188db556"
+  },
+  {
+    "model": "doubao-lite-4k-character-240515",
+    "status": 404,
+    "ms": 120,
+    "tokens": null,
+    "error": "The model or endpoint doubao-lite-4k-character-240515 does not exist or you do not have access to it. Request id: 0217915583978747097180e458"
+  },
+  {
+    "model": "deepseek-r1-250120",
+    "status": 404,
+    "ms": 121,
+    "tokens": null,
+    "error": "The model or endpoint deepseek-r1-250120 does not exist or you do not have access to it. Request id: 0217915583991501dd291674643982da436c463"
+  },
+  {
+    "model": "deepseek-v3-241226",
+    "status": 404,
+    "ms": 123,
+    "tokens": null,
+    "error": "The model or endpoint deepseek-v3-241226 does not exist or you do not have access to it. Request id: 0217915583990271dd291674643982da436c463"
+  },
+  {
+    "model": "doubao-lite-32k-character-250228",
+    "status": 404,
+    "ms": 123,
+    "tokens": null,
+    "error": "The model or endpoint doubao-lite-32k-character-250228 does not exist or you do not have access to it. Request id: 0217915583993758c80d243ba"
+  },
+  {
+    "model": "glm-4-7-251222",
+    "status": 404,
+    "ms": 124,
+    "tokens": null,
+    "error": "The model or endpoint glm-4-7-251222 does not exist or you do not have access to it. Request id: 0217915584005077097180e458ae3c6e16036676cea"
+  },
+  {
+    "model": "mistral-7b-instruct-v0.2",
+    "status": 404,
+    "ms": 125,
+    "tokens": null,
+    "error": "The model or endpoint mistral-7b-instruct-v0.2 does not exist or you do not have access to it. Request id: 0217915583978878c80d243bafb90575a"
+  },
+  {
+    "model": "doubao-pro-4k-functioncall-240515",
+    "status": 404,
+    "ms": 125,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-4k-functioncall-240515 does not exist or you do not have access to it. Request id: 0217915583979191dd291674"
+  },
+  {
+    "model": "doubao-pro-32k-240615",
+    "status": 404,
+    "ms": 125,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-240615 does not exist or you do not have access to it. Request id: 02179155839817288db556329240132465f0"
+  },
+  {
+    "model": "doubao-seed-2-0-mini-260215",
+    "status": 404,
+    "ms": 125,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-2-0-mini-260215 does not exist or you do not have access to it. Request id: 0217915584006327097180e458ae3c"
+  },
+  {
+    "model": "doubao-lite-128k-240428",
+    "status": 404,
+    "ms": 126,
+    "tokens": null,
+    "error": "The model or endpoint doubao-lite-128k-240428 does not exist or you do not have access to it. Request id: 02179155839768288db556329240132465"
+  },
+  {
+    "model": "doubao-1-5-pro-32k-250115",
+    "status": 404,
+    "ms": 127,
+    "tokens": null,
+    "error": "The model or endpoint doubao-1-5-pro-32k-250115 does not exist or you do not have access to it. Request id: 0217915583988971dd291674643982da"
+  },
+  {
+    "model": "deepseek-r1-distill-qwen-7b-250120",
+    "status": 404,
+    "ms": 127,
+    "tokens": null,
+    "error": "The model or endpoint deepseek-r1-distill-qwen-7b-250120 does not exist or you do not have access to it. Request id: 02179155839904688db5563"
+  },
+  {
+    "model": "doubao-1-5-thinking-vision-pro-250428",
+    "status": 404,
+    "ms": 128,
+    "tokens": null,
+    "error": "The model or endpoint doubao-1-5-thinking-vision-pro-250428 does not exist or you do not have access to it. Request id: 0217915583994988c80d"
+  },
+  {
+    "model": "doubao-1-5-vision-pro-32k-250115",
+    "status": 404,
+    "ms": 129,
+    "tokens": null,
+    "error": "The model or endpoint doubao-1-5-vision-pro-32k-250115 does not exist or you do not have access to it. Request id: 02179155839891488db556329"
+  },
+  {
+    "model": "doubao-seed-1-6-250615",
+    "status": 404,
+    "ms": 129,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-1-6-250615 does not exist or you do not have access to it. Request id: 02179155839962488db556329240132465f"
+  },
+  {
+    "model": "doubao-pro-4k-character-240515",
+    "status": 404,
+    "ms": 130,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-4k-character-240515 does not exist or you do not have access to it. Request id: 02179155839791088db55632924"
+  },
+  {
+    "model": "doubao-pro-128k-240628",
+    "status": 404,
+    "ms": 131,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-128k-240628 does not exist or you do not have access to it. Request id: 0217915583982421dd291674643982da436"
+  },
+  {
+    "model": "doubao-1-5-thinking-pro-250415",
+    "status": 404,
+    "ms": 131,
+    "tokens": null,
+    "error": "The model or endpoint doubao-1-5-thinking-pro-250415 does not exist or you do not have access to it. Request id: 02179155839938988db55632924"
+  },
+  {
+    "model": "deepseek-v4-pro-260425",
+    "status": 404,
+    "ms": 131,
+    "tokens": null,
+    "error": "The model or endpoint deepseek-v4-pro-260425 does not exist or you do not have access to it. Request id: 0217915584019371dd291674643982da436"
+  },
+  {
+    "model": "doubao-pro-4k-browsing-240524",
+    "status": 404,
+    "ms": 133,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-4k-browsing-240524 does not exist or you do not have access to it. Request id: 02179155839804088db556329240"
+  },
+  {
+    "model": "deepseek-v3-2-251201",
+    "status": 404,
+    "ms": 133,
+    "tokens": null,
+    "error": "The model or endpoint deepseek-v3-2-251201 does not exist or you do not have access to it. Request id: 0217915584004781dd291674643982da436c4"
+  },
+  {
+    "model": "doubao-seed-2-0-lite-260215",
+    "status": 404,
+    "ms": 133,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-2-0-lite-260215 does not exist or you do not have access to it. Request id: 0217915584006121dd291674643982"
+  },
+  {
+    "model": "doubao-pro-32k-functioncall-240815",
+    "status": 404,
+    "ms": 137,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-functioncall-240815 does not exist or you do not have access to it. Request id: 0217915583983728c80d243"
+  },
+  {
+    "model": "kimi-k2-thinking-251104",
+    "status": 404,
+    "ms": 137,
+    "tokens": null,
+    "error": "The model or endpoint kimi-k2-thinking-251104 does not exist or you do not have access to it. Request id: 0217915584003401dd291674643982da43"
+  },
+  {
+    "model": "doubao-vision-lite-32k-241015",
+    "status": 404,
+    "ms": 142,
+    "tokens": null,
+    "error": "The model or endpoint doubao-vision-lite-32k-241015 does not exist or you do not have access to it. Request id: 0217915583987581dd2916746439"
+  },
+  {
+    "model": "deepseek-v3-250324",
+    "status": 404,
+    "ms": 142,
+    "tokens": null,
+    "error": "The model or endpoint deepseek-v3-250324 does not exist or you do not have access to it. Request id: 0217915583992681dd291674643982da436c463"
+  },
+  {
+    "model": "deepseek-v3-1-250821",
+    "status": 404,
+    "ms": 145,
+    "tokens": null,
+    "error": "The model or endpoint deepseek-v3-1-250821 does not exist or you do not have access to it. Request id: 0217915583999381dd291674643982da436c4"
+  },
+  {
+    "model": "doubao-pro-32k-character-241215",
+    "status": 404,
+    "ms": 147,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-character-241215 does not exist or you do not have access to it. Request id: 02179155839876788db5563292"
+  },
+  {
+    "model": "kimi-k2-250905",
+    "status": 404,
+    "ms": 147,
+    "tokens": null,
+    "error": "The model or endpoint kimi-k2-250905 does not exist or you do not have access to it. Request id: 0217915584000851dd291674643982da436c46312b5"
+  },
+  {
+    "model": "kimi-k2-250711",
+    "status": 404,
+    "ms": 148,
+    "tokens": null,
+    "error": "The model or endpoint kimi-k2-250711 does not exist or you do not have access to it. Request id: 0217915583997901dd291674643982da436c46312b5"
+  },
+  {
+    "model": "doubao-pro-32k-browsing-240828",
+    "status": 404,
+    "ms": 149,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-browsing-240828 does not exist or you do not have access to it. Request id: 0217915583985108c80d243bafb"
+  },
+  {
+    "model": "doubao-seed3d-1-0-250928",
+    "status": 404,
+    "ms": 151,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed3d-1-0-250928 does not exist or you do not have access to it. Request id: 0217915584002808c80d243bafb90575a"
+  },
+  {
+    "model": "doubao-seed-1-8-251228",
+    "status": 404,
+    "ms": 151,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-1-8-251228 does not exist or you do not have access to it. Request id: 02179155840056488db556329240132465f"
+  },
+  {
+    "model": "doubao-lite-32k-240628",
+    "status": 404,
+    "ms": 153,
+    "tokens": null,
+    "error": "The model or endpoint doubao-lite-32k-240628 does not exist or you do not have access to it. Request id: 0217915583982228c80d243bafb90575ac6"
+  },
+  {
+    "model": "doubao-vision-pro-32k-241028",
+    "status": 404,
+    "ms": 153,
+    "tokens": null,
+    "error": "The model or endpoint doubao-vision-pro-32k-241028 does not exist or you do not have access to it. Request id: 0217915583987297097180e458ae3"
+  },
+  {
+    "model": "doubao-seed-2-0-pro-260215",
+    "status": 404,
+    "ms": 159,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-2-0-pro-260215 does not exist or you do not have access to it. Request id: 02179155840071488db556329240132"
+  },
+  {
+    "model": "doubao-seed-1-6-thinking-250615",
+    "status": 404,
+    "ms": 160,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-1-6-thinking-250615 does not exist or you do not have access to it. Request id: 0217915583996301dd29167464"
+  },
+  {
+    "model": "doubao-pro-32k-functioncall-preview",
+    "status": 404,
+    "ms": 162,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-functioncall-preview does not exist or you do not have access to it. Request id: 02179155839860788db556"
+  },
+  {
+    "model": "doubao-1.5-vision-lite-250315",
+    "status": 404,
+    "ms": 162,
+    "tokens": null,
+    "error": "The model or endpoint doubao-1.5-vision-lite-250315 does not exist or you do not have access to it. Request id: 0217915583992138c80d243bafb9"
+  },
+  {
+    "model": "doubao-pro-32k-character-240828",
+    "status": 404,
+    "ms": 165,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-character-240828 does not exist or you do not have access to it. Request id: 0217915583984921dd29167464"
+  },
+  {
+    "model": "qwen3-8b-20250429",
+    "status": 404,
+    "ms": 166,
+    "tokens": null,
+    "error": "The model or endpoint qwen3-8b-20250429 does not exist or you do not have access to it. Request id: 0217915584000218c80d243bafb90575ac6ccce9"
+  },
+  {
+    "model": "qwen3-0-6b-20250429",
+    "status": 404,
+    "ms": 169,
+    "tokens": null,
+    "error": "The model or endpoint qwen3-0-6b-20250429 does not exist or you do not have access to it. Request id: 0217915584004328c80d243bafb90575ac6ccc"
+  },
+  {
+    "model": "deepseek-v4-pro-ga-260813",
+    "status": 403,
+    "ms": 169,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 0217915584035441dd291674643982da436c46312b5f1c926c17e"
+  },
+  {
+    "model": "doubao-seed-1-6-vision-250815",
+    "status": 404,
+    "ms": 186,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-1-6-vision-250815 does not exist or you do not have access to it. Request id: 0217915583998368c80d243bafb9"
+  },
+  {
+    "model": "doubao-lite-32k-240428",
+    "status": 404,
+    "ms": 190,
+    "tokens": null,
+    "error": "The model or endpoint doubao-lite-32k-240428 does not exist or you do not have access to it. Request id: 0217915583977747097180e458ae3c6e160"
+  },
+  {
+    "model": "doubao-seed-1-6-flash-250715",
+    "status": 404,
+    "ms": 194,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-1-6-flash-250715 does not exist or you do not have access to it. Request id: 02179155839975488db5563292401"
+  },
+  {
+    "model": "doubao-pro-32k-functioncall-240515",
+    "status": 404,
+    "ms": 197,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-32k-functioncall-240515 does not exist or you do not have access to it. Request id: 0217915583980441dd29167"
+  },
+  {
+    "model": "doubao-pro-4k-character-240728",
+    "status": 404,
+    "ms": 198,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-4k-character-240728 does not exist or you do not have access to it. Request id: 02179155839830088db55632924"
+  },
+  {
+    "model": "doubao-pro-128k-240515",
+    "status": 404,
+    "ms": 200,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-128k-240515 does not exist or you do not have access to it. Request id: 0217915583977918c80d243bafb90575ac6"
+  },
+  {
+    "model": "doubao-seed-2-1-pro-260915",
+    "status": 403,
+    "ms": 218,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 02179155840436188db556329240132465f0386a4fcfe59b47dc0"
+  },
+  {
+    "model": "doubao-1-5-thinking-pro-m-250415",
+    "status": 404,
+    "ms": 219,
+    "tokens": null,
+    "error": "The model or endpoint doubao-1-5-thinking-pro-m-250415 does not exist or you do not have access to it. Request id: 0217915583994111dd2916746"
+  },
+  {
+    "model": "doubao-seed-character-251128",
+    "status": 403,
+    "ms": 232,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 0217915584006018c80d243bafb90575ac6ccce9142197df80582"
+  },
+  {
+    "model": "doubao-lite-4k-240328",
+    "status": 404,
+    "ms": 234,
+    "tokens": null,
+    "error": "The model or endpoint doubao-lite-4k-240328 does not exist or you do not have access to it. Request id: 0217915583977991dd291674643982da436c"
+  },
+  {
+    "model": "doubao-seed-1-6-thinking-250715",
+    "status": 404,
+    "ms": 242,
+    "tokens": null,
+    "error": "The model or endpoint doubao-seed-1-6-thinking-250715 does not exist or you do not have access to it. Request id: 0217915583997127097180e458"
+  },
+  {
+    "model": "doubao-seed-2-1-lite-260915",
+    "status": 403,
+    "ms": 255,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 0217915584037101dd291674643982da436c46312b5f1c9d52a34"
+  },
+  {
+    "model": "glm-5-2-260617",
+    "status": 403,
+    "ms": 285,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 0217915584032571dd291674643982da436c46312b5f1c91ea7d9"
+  },
+  {
+    "model": "doubao-seed-evolving",
+    "status": 403,
+    "ms": 289,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 02179155840315188db556329240132465f0386a4fcfe59a3f8cd"
+  },
+  {
+    "model": "doubao-seed-2-0-mini-260428",
+    "status": 403,
+    "ms": 312,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 0217915584011471dd291674643982da436c46312b5f1c9dca570"
+  },
+  {
+    "model": "doubao-pro-4k-functioncall-240615",
+    "status": 404,
+    "ms": 324,
+    "tokens": null,
+    "error": "The model or endpoint doubao-pro-4k-functioncall-240615 does not exist or you do not have access to it. Request id: 0217915583980797097180e4"
+  },
+  {
+    "model": "doubao-seed-2-1-turbo-260628",
+    "status": 403,
+    "ms": 333,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 0217915584025401dd291674643982da436c46312b5f1c9e556cc"
+  },
+  {
+    "model": "deepseek-v4-1-flash-260910",
+    "status": 403,
+    "ms": 358,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 02179155840400388db556329240132465f0386a4fcfe5983b8f1"
+  },
+  {
+    "model": "doubao-seed-2-1-pro-260628",
+    "status": 403,
+    "ms": 364,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 0217915584021761dd291674643982da436c46312b5f1c97cdeb2"
+  },
+  {
+    "model": "doubao-seed-translation-250915",
+    "status": 403,
+    "ms": 381,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 0217915584001277097180e458ae3c6e16036676cea376ff30c31"
+  },
+  {
+    "model": "doubao-seed-character-260628",
+    "status": 403,
+    "ms": 383,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 0217915584028731dd291674643982da436c46312b5f1c9eb9fc8"
+  },
+  {
+    "model": "doubao-seed-2-0-code-preview-260215",
+    "status": 403,
+    "ms": 404,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 0217915584007431dd291674643982da436c46312b5f1c9544599"
+  },
+  {
+    "model": "glm-5-3-flash-260828",
+    "status": 403,
+    "ms": 432,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 0217915584039651dd291674643982da436c46312b5f1c9acf518"
+  },
+  {
+    "model": "doubao-seed-2-0-lite-260428",
+    "status": 403,
+    "ms": 478,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 0217915584014621dd291674643982da436c46312b5f1c9b26b27"
+  },
+  {
+    "model": "deepseek-v4-flash-ga-260731",
+    "status": 403,
+    "ms": 563,
+    "tokens": null,
+    "error": "The request failed because your account has an overdue balance. Request id: 02179155840343788db556329240132465f0386a4fcfe594d8cc5"
+  },
+  {
+    "model": "doubao-1-5-lite-32k-250115",
+    "status": 404,
+    "ms": 734,
+    "tokens": null,
+    "error": "The model or endpoint doubao-1-5-lite-32k-250115 does not exist or you do not have access to it. Request id: 0217915583988797097180e458ae3c6"
+  },
+  {
+    "model": "doubao-seed3d-2-0-260328",
+    "status": 500,
+    "ms": 2276,
+    "tokens": null,
+    "error": "The service encountered an unexpected internal error. Request id: 02179155840087388db556329240132465f0386a4fcfe59fb2587"
+  },
+  {
+    "model": "hyper3d-gen2-260112",
+    "status": -1,
+    "ms": 30001,
+    "tokens": null,
+    "error": "The operation was aborted due to timeout"
+  },
+  {
+    "model": "hitem3d-2-0-251223",
+    "status": -1,
+    "ms": 30001,
+    "tokens": null,
+    "error": "The operation was aborted due to timeout"
+  }
+]

@@ -1,0 +1,12 @@
+docs: 渠道目录记下两条"看着能用、实际不能用"的腾讯通道
+
+- TokenHub Coding Plan / Token Plan：技术上确实给 OpenAI 兼容端点
+  （api.lkeap.cloud.tencent.com/coding/v3、.../plan/v3）+ 专属 key（sk-sp-xxxx / sk-tp-xxxx），
+  但官方「订阅前须知」第 2 条明文**「严禁 API 调用」**：禁止自动化脚本、自定义应用后端、
+  任何非交互式批量调用，违规可暂停订阅或封禁 key。而且不能与新人免费体验包叠加。
+  挂本地路由代理正落在被禁的那一类。
+- WorkBuddy：是 TokenHub 的**消费端**（官方文档教你在它里面填别人的 API key），
+  自己不签发 key，赠送的 500 积分/月绑定账号登录态，导不出来。
+  社区逆向桥接（workbuddy-claude-bridge 等）违反 AUP §3.5/§4/§5，后果是封号。
+
+两条都标 deprecated，面板上会落到「🚫 不该入池」区，省得以后重复调研。

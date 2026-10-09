@@ -64,3 +64,13 @@ sh.Environment("Process")("QQBOT_SILENT") = "1"
 ' 0 = hidden window, False = do not wait.
 ' Wrap with cmd /c to redirect output into the log file.
 sh.Run "cmd /c node " & caArg & "qq-snowluma-bot.mjs >> logs\qq-bot.log 2>&1", 0, False
+
+' Silent launch otherwise looks like "nothing happened". Show a tray balloon that
+' fades by itself. The stop-script names are read from the file system (not typed
+' here) so their Chinese characters render correctly in this ASCII-only file.
+Dim msg, f
+msg = "QQ bot is starting in the background." & vbCrLf & vbCrLf & "To stop it, double-click:" & vbCrLf
+For Each f In fso.GetFolder(rootDir).Files
+  If LCase(Right(f.Name, 4)) = ".bat" Then msg = msg & "   " & f.Name & vbCrLf
+Next
+sh.Popup msg, 6, "QQ Bot", 64
